@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.hex-box {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  width: inherit;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-wrapper {
+  height: 150px;
+  width: 120;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.hex-field {
+  font-family: "Courier";
+  text-align: center;
+  width: 5em;
+  font-size: 1em;
+}
+
+.hex-field-wrapper {
+  font-family: "Courier";
+  font-size: 2em;
+  color: white;
+}
+
+.nudge {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nudge-wrapper {
+  justify-content: space-around;
+  display: flex;
+  width: inherit;
+}
+
+.nudge-control {
+  width: 40px;
+}
+
+.nudge-field {
+  text-align: center;
+}
