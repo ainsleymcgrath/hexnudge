@@ -4,9 +4,9 @@ import HexBox from "../components/HexBox";
 import { nudgeToValidHexPart } from "../components/_helpers";
 
 afterEach(cleanup);
-const { container } = render(<HexBox />);
 
 describe("A single HexBox instance", () => {
+  const { container } = render(<HexBox />);
   it("Loads with a valid hex code in the hexfield", () => {
     const hexField = container.querySelector(".hex-field");
     const text = hexField.value;
@@ -18,36 +18,91 @@ describe("A single HexBox instance", () => {
     const { container, getByText } = render(<HexBox />);
 
     const upButton = getByText("+");
-    console.log(Object.keys(upButton));
     const incrValue = container.querySelector("#r-nudge-field").value;
     const initialRedValue = container
       .querySelector(".hex-field")
       .value.slice(0, 2);
     const expectedValue = nudgeToValidHexPart(initialRedValue, incrValue);
-    console.log(initialRedValue);
-    console.log(expectedValue);
 
     fireEvent.click(upButton, { bubbles: true, cancelable: true });
 
     const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
-    console.log(initialRedValue);
-    console.log(newRedValue);
+
+    console.log(`
+      Initial red value: ${initialRedValue}
+      Incrememnt value: ${incrValue}
+    `);
+
     expect(newRedValue).toEqual(expectedValue);
   });
 
-  // it("Increments by the default value down", () => {
-  //   expect().toBe(false);
-  // });
+  it("Increments by the default value down", () => {
+    const { container, getByText } = render(<HexBox />);
 
-  // it("Increments by a reasonable random value up", () => {
-  //   expect().toBe(false);
-  // });
+    const upButton = getByText("-");
+    const incrValue = container.querySelector("#r-nudge-field").value;
+    const initialRedValue = container
+      .querySelector(".hex-field")
+      .value.slice(0, 2);
+    const expectedValue = nudgeToValidHexPart(initialRedValue, -1 * incrValue);
 
-  // it("Increments by a reasonable random value down", () => {
-  //   expect().toBe(false);
-  // });
+    fireEvent.click(upButton, { bubbles: true, cancelable: true });
 
-  // it("Has a value in the input that matches the background", () => {
-  //   expect().toBe(false);
-  // });
+    const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
+
+    console.log(`
+      Initial red value: ${initialRedValue}
+      Incrememnt value: ${incrValue}
+    `);
+
+    expect(newRedValue).toEqual(expectedValue);
+  });
+
+  it("Increments by a reasonable random value up", () => {
+    const { container, getByText } = render(<HexBox />);
+
+    const upButton = getByText("+");
+    const incrValue = Math.floor(Math.random() * 255);
+    const initialRedValue = container
+      .querySelector(".hex-field")
+      .value.slice(0, 2);
+    const expectedValue = nudgeToValidHexPart(initialRedValue, incrValue);
+
+    fireEvent.click(upButton, { bubbles: true, cancelable: true });
+
+    const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
+
+    console.log(`
+      Initial red value: ${initialRedValue}
+      Incrememnt value: ${incrValue}
+    `);
+
+    expect(newRedValue).toEqual(expectedValue);
+  });
+
+  it("Increments by a reasonable random value down", () => {
+    const { container, getByText } = render(<HexBox />);
+
+    const upButton = getByText("-");
+    const incrValue = Math.floor(Math.random() * 255);
+    const initialRedValue = container
+      .querySelector(".hex-field")
+      .value.slice(0, 2);
+    const expectedValue = nudgeToValidHexPart(initialRedValue, -incrValue);
+
+    fireEvent.click(upButton, { bubbles: true, cancelable: true });
+
+    const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
+
+    console.log(`
+      Initial red value: ${initialRedValue}
+      Incrememnt value: ${incrValue}
+    `);
+
+    expect(newRedValue).toEqual(expectedValue);
+  });
+
+  it("Has a value in the input that matches the background", () => {
+    expect().toBe(false);
+  });
 });
