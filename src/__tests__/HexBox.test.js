@@ -2,6 +2,7 @@ import React from "react";
 import { render, cleanup, fireEvent } from "react-testing-library";
 import HexBox from "../components/HexBox";
 import { nudgeToValidHexPart } from "../components/_helpers";
+import rgbHex from "rgb-hex";
 
 afterEach(cleanup);
 
@@ -28,10 +29,10 @@ describe("A single HexBox instance", () => {
 
     const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
 
-    console.log(`
-      Initial red value: ${initialRedValue}
-      Incrememnt value: ${incrValue}
-    `);
+    // console.log(`
+    //   Initial red value: ${initialRedValue}
+    //   Incrememnt value: ${incrValue}
+    // `);
 
     expect(newRedValue).toEqual(expectedValue);
   });
@@ -50,10 +51,10 @@ describe("A single HexBox instance", () => {
 
     const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
 
-    console.log(`
-      Initial red value: ${initialRedValue}
-      Incrememnt value: ${incrValue}
-    `);
+    // console.log(`
+    //   Initial red value: ${initialRedValue}
+    //   Incrememnt value: ${incrValue}
+    // `);
 
     expect(newRedValue).toEqual(expectedValue);
   });
@@ -72,10 +73,10 @@ describe("A single HexBox instance", () => {
 
     const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
 
-    console.log(`
-      Initial red value: ${initialRedValue}
-      Incrememnt value: ${incrValue}
-    `);
+    // console.log(`
+    //   Initial red value: ${initialRedValue}
+    //   Incrememnt value: ${incrValue}
+    // `);
 
     expect(newRedValue).toEqual(expectedValue);
   });
@@ -94,15 +95,19 @@ describe("A single HexBox instance", () => {
 
     const newRedValue = container.querySelector(".hex-field").value.slice(0, 2);
 
-    console.log(`
-      Initial red value: ${initialRedValue}
-      Incrememnt value: ${incrValue}
-    `);
+    // console.log(`
+    //   Initial red value: ${initialRedValue}
+    //   Incrememnt value: ${incrValue}
+    // `);
 
     expect(newRedValue).toEqual(expectedValue);
   });
 
   it("Has a value in the input that matches the background", () => {
-    expect().toBe(false);
+    const { container } = render(<HexBox />);
+    const hex = container.querySelector(".hex-field").value;
+    const bgColor = container.querySelector(".hex-box").style.backgroundColor;
+
+    expect(hex).toEqual(rgbHex(bgColor).toUpperCase());
   });
 });

@@ -1,6 +1,7 @@
 import React from "react";
 import Nudge from "./Nudge";
 
+import uuidv4 from "uuid";
 import { nudgeToValidHexPart } from "./_helpers";
 
 export default class HexBox extends React.Component {
@@ -43,6 +44,7 @@ export default class HexBox extends React.Component {
     return (
       <div
         className="hex-box"
+        data-testid=""
         style={{
           backgroundColor: `#${this.state.r}${this.state.g}${this.state.b}`
         }}
