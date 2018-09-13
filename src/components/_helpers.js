@@ -1,4 +1,4 @@
-export const nudgeToValidHexPart = (initial, additional) => {
+export function nudgeToValidHexPart(initial, additional) {
   if (!isNumber(parseInt(additional, 16))) {
     console.warn("You can only nudge by integers.");
     return parseInt(initial, 16)
@@ -10,6 +10,19 @@ export const nudgeToValidHexPart = (initial, additional) => {
   return (hexPart > 255 ? 255 : hexPart < 0 ? "00" : hexPart)
     .toString(16)
     .toUpperCase();
-};
+}
 
+// is it...a number?
+// n is for number
 export const isNumber = n => !isNaN(parseInt(n)) && isFinite(n);
+
+// concisely convert rgb to hex
+// n is for number
+export const display = n =>
+  n.toString(16).length === 1
+    ? 0 + n.toString(16).toUpperCase()
+    : n.toString(16).toUpperCase();
+
+// too big? FF. too small? 0. neither? itself. preserve max/min.
+// n is for number
+export const keepMaxMin = n => (n >= 255 ? 255 : n <= 0 ? 0 : n);

@@ -2,33 +2,27 @@ import React from "react";
 import Nudge from "./Nudge";
 
 import uuidv4 from "uuid";
-import { nudgeToValidHexPart } from "./_helpers";
+import { keepMaxMin, display } from "./_helpers";
 
 export default class HexBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      r: Math.floor(Math.random() * parseInt("FF", 16))
-        .toString(16)
-        .toUpperCase(),
-      g: Math.floor(Math.random() * parseInt("FF", 16))
-        .toString(16)
-        .toUpperCase(),
-      b: Math.floor(Math.random() * parseInt("FF", 16))
-        .toString(16)
-        .toUpperCase()
+      r: Math.floor(Math.random() * 255),
+      g: Math.floor(Math.random() * 255),
+      b: Math.floor(Math.random() * 255)
     };
     this.handleNudgeIncrement = this.handleNudgeIncrement.bind(this);
     this.handleManualHexValue = this.handleManualHexValue.bind(this);
   }
 
-  handleNudgeIncrement(amt, which) {
-    const newColor = nudgeToValidHexPart(this.state[which], amt);
+  handleNudgeIncrement(amt, nudged) {
+    const newColor = keepMaxMin(amt + this.state[nudged]);
 
     this.setState({
-      r: which === "r" && newColor != this.state.r ? newColor : this.state.r,
-      g: which === "g" && newColor != this.state.g ? newColor : this.state.g,
-      b: which === "b" && newColor != this.state.b ? newColor : this.state.b
+      r: nudged === "r" ? newColor : this.state.r,
+      g: nudged === "g" ? newColor : this.state.g,
+      b: nudged === "b" ? newColor : this.state.b
     });
   }
 
@@ -41,6 +35,7 @@ export default class HexBox extends React.Component {
   }
 
   render() {
+    const rgb = [this.state.r, this.state.g, this.state.b];
     return (
       <div
         className="hex-box"
@@ -57,7 +52,7 @@ export default class HexBox extends React.Component {
             <Nudge incr={this.handleNudgeIncrement} colorPart="b" />
           </div>
           <HexField
-            rgb={`${this.state.r}${this.state.g}${this.state.b}`}
+            rgb={`${rgb.map(display).reduce((p, c) => p + c, "")}`}
             handleManualHexValue={this.handleManualHexValue}
           />
         </div>
