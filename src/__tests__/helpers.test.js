@@ -44,3 +44,23 @@ describe("The isNumber function", () => {
   // TODO: checks for strings
   // TODO: hecks for base 16 and base 10 numbers
 });
+
+describe("The display function", () => {
+  it("adds a leading 0 when given a 0", () => {
+    expect(display(0)).toEqual("00");
+  });
+
+  it("adds a leading zero when given 15", () => {
+    expect(display(15)).toEqual("0F");
+  });
+});
+
+describe("The keepMaxMin function", () => {
+  it("turns a 300 to a 255", () => {
+    expect(keepMaxMin(300)).toEqual(255);
+  });
+
+  it("turns a -3 to a 0", () => {
+    expect(keepMaxMin(-3)).toEqual(0);
+  });
+});
