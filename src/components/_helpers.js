@@ -16,7 +16,7 @@ export function nudgeToValidHexPart(initial, additional) {
 // n is for number
 export const isNumber = n => !isNaN(parseInt(n)) && isFinite(n);
 
-// concisely convert rgb to hex
+// convert ugly rgb to display-worthy hex
 // n is for number
 export const display = n =>
   n.toString(16).length === 1
