@@ -23,6 +23,10 @@ export const display = n =>
     ? 0 + n.toString(16).toUpperCase()
     : n.toString(16).toUpperCase();
 
+// turn human friendly strings to machiney integers
+// n is for number
+export const undisplay = n => parseInt(n, 16);
+
 // too big? FF. too small? 0. neither? itself. preserve max/min.
 // n is for number
 export const keepMaxMin = n => (n >= 255 ? 255 : n <= 0 ? 0 : n);

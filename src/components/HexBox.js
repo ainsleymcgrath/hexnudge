@@ -2,16 +2,18 @@ import React from "react";
 import Nudge from "./Nudge";
 
 import uuidv4 from "uuid";
-import { keepMaxMin, display } from "./_helpers";
+import { keepMaxMin, display, undisplay } from "./_helpers";
 
 export default class HexBox extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       r: Math.floor(Math.random() * 255),
       g: Math.floor(Math.random() * 255),
       b: Math.floor(Math.random() * 255)
     };
+
     this.handleNudgeIncrement = this.handleNudgeIncrement.bind(this);
     this.handleManualHexValue = this.handleManualHexValue.bind(this);
   }
@@ -19,19 +21,21 @@ export default class HexBox extends React.Component {
   handleNudgeIncrement(amt, nudged) {
     const newColor = keepMaxMin(amt + this.state[nudged]);
 
-    this.setState({
-      r: nudged === "r" ? newColor : this.state.r,
-      g: nudged === "g" ? newColor : this.state.g,
-      b: nudged === "b" ? newColor : this.state.b
-    });
+    this.setState((state, props) => ({
+      r: nudged === "r" ? newColor : state.r,
+      g: nudged === "g" ? newColor : state.g,
+      b: nudged === "b" ? newColor : state.b
+    }));
   }
 
   handleManualHexValue(newHex) {
-    this.setState({
-      r: newHex.slice(0, 2),
-      g: newHex.slice(2, 4),
-      b: newHex.slice(4, 6)
-    });
+    if (true) {
+      this.setState({
+        r: undisplay(newHex.slice(0, 2)),
+        g: undisplay(newHex.slice(2, 4)),
+        b: undisplay(newHex.slice(4, 6))
+      });
+    }
   }
 
   render() {
@@ -41,7 +45,7 @@ export default class HexBox extends React.Component {
         className="hex-box"
         data-testid=""
         style={{
-          backgroundColor: `#${this.state.r}${this.state.g}${this.state.b}`
+          backgroundColor: `rgb(${rgb.join(", ")})`
         }}
       >
         {" "}
@@ -52,7 +56,7 @@ export default class HexBox extends React.Component {
             <Nudge incr={this.handleNudgeIncrement} colorPart="b" />
           </div>
           <HexField
-            rgb={`${rgb.map(display).reduce((p, c) => p + c, "")}`}
+            rgb={`${rgb.map(display).join("")}`}
             handleManualHexValue={this.handleManualHexValue}
           />
         </div>
@@ -64,7 +68,6 @@ export default class HexBox extends React.Component {
 class HexField extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.handleChange = this.handleChange.bind(this);
   }
 
