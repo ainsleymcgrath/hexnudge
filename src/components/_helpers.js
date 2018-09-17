@@ -1,17 +1,3 @@
-export function nudgeToValidHexPart(initial, additional) {
-  if (!isNumber(parseInt(additional, 16))) {
-    console.warn("You can only nudge by integers.");
-    return parseInt(initial, 16)
-      .toString(16)
-      .toUpperCase();
-  }
-  const hexPart = parseInt(initial, 16) + parseInt(additional, 16);
-  // too big? FF. too small? 0. neither? itself.
-  return (hexPart > 255 ? 255 : hexPart < 0 ? "00" : hexPart)
-    .toString(16)
-    .toUpperCase();
-}
-
 // is it...a number?
 // n is for number
 export const isNumber = n => !isNaN(parseInt(n)) && isFinite(n);
@@ -24,9 +10,11 @@ export const display = n =>
     : n.toString(16).toUpperCase();
 
 // turn human friendly strings to machiney integers
-// n is for number
-export const undisplay = n => parseInt(n, 16);
+// s is for string
+export const undisplay = s => (isNumber(parseInt(s, 16)) ? parseInt(s, 16) : s);
 
 // too big? FF. too small? 0. neither? itself. preserve max/min.
 // n is for number
 export const keepMaxMin = n => (n >= 255 ? 255 : n <= 0 ? 0 : n);
+
+export const isHex = s => s.match(/^(?:[0-9a-fA-F]{3}){1,2}$/);

@@ -2,7 +2,7 @@ import React from "react";
 import Nudge from "./Nudge";
 
 import uuidv4 from "uuid";
-import { keepMaxMin, display, undisplay } from "./_helpers";
+import { keepMaxMin, display, undisplay, isHex } from "./_helpers";
 
 export default class HexBox extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class HexBox extends React.Component {
   handleNudgeIncrement(amt, nudged) {
     const newColor = keepMaxMin(amt + this.state[nudged]);
 
-    this.setState((state, props) => ({
+    this.setState(state => ({
       r: nudged === "r" ? newColor : state.r,
       g: nudged === "g" ? newColor : state.g,
       b: nudged === "b" ? newColor : state.b
@@ -56,7 +56,7 @@ export default class HexBox extends React.Component {
             <Nudge incr={this.handleNudgeIncrement} colorPart="b" />
           </div>
           <HexField
-            rgb={`${rgb.map(display).join("")}`}
+            value={`${rgb.map(display).join("")}`}
             handleManualHexValue={this.handleManualHexValue}
           />
         </div>
@@ -82,7 +82,7 @@ class HexField extends React.Component {
         #
         <input
           className="hex-field"
-          value={this.props.rgb}
+          value={this.props.value}
           label="A box for your hex code"
           onChange={this.handleChange}
         />
