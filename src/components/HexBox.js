@@ -19,27 +19,38 @@ export default class HexBox extends React.Component {
   }
 
   handleNudgeIncrement(amt, nudged) {
-    const newColor = keepMaxMin(amt + this.state[nudged]);
+    const newColor = keepMaxMin(parseInt(amt) + this.state[nudged]);
 
     this.setState(state => ({
       r: nudged === "r" ? newColor : state.r,
       g: nudged === "g" ? newColor : state.g,
-      b: nudged === "b" ? newColor : state.b
+      b: nudged === "b" ? newColor : state.b,
+      manuallyEntering: false
     }));
   }
 
   handleManualHexValue(newHex) {
-    if (true) {
+    if (newHex.length === 6) {
       this.setState({
         r: undisplay(newHex.slice(0, 2)),
         g: undisplay(newHex.slice(2, 4)),
-        b: undisplay(newHex.slice(4, 6))
+        b: undisplay(newHex.slice(4, 6)),
+        manuallyEntering: false
+      });
+    } else {
+      this.setState({
+        r: newHex.slice(0, 2),
+        g: newHex.slice(2, 4),
+        b: newHex.slice(4, 6),
+        manuallyEntering: true
       });
     }
   }
 
   render() {
     const rgb = [this.state.r, this.state.g, this.state.b];
+    const manual = this.state.manuallyEntering;
+
     return (
       <div
         className="hex-box"
@@ -56,7 +67,7 @@ export default class HexBox extends React.Component {
             <Nudge incr={this.handleNudgeIncrement} colorPart="b" />
           </div>
           <HexField
-            value={`${rgb.map(display).join("")}`}
+            value={manual ? `${rgb.join("")}` : `${rgb.map(display).join("")}`}
             handleManualHexValue={this.handleManualHexValue}
           />
         </div>
@@ -85,6 +96,7 @@ class HexField extends React.Component {
           value={this.props.value}
           label="A box for your hex code"
           onChange={this.handleChange}
+          maxLength="6"
         />
       </div>
     );
