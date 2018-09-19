@@ -11,7 +11,8 @@ export default class HexBox extends React.Component {
     this.state = {
       r: Math.floor(Math.random() * 255),
       g: Math.floor(Math.random() * 255),
-      b: Math.floor(Math.random() * 255)
+      b: Math.floor(Math.random() * 255),
+      manuallyEntering: false
     };
 
     this.handleNudgeIncrement = this.handleNudgeIncrement.bind(this);
@@ -55,9 +56,18 @@ export default class HexBox extends React.Component {
       <div
         className="hex-box"
         data-testid=""
-        style={{
-          backgroundColor: `rgb(${rgb.join(", ")})`
-        }}
+        style={
+          manual
+            ? {
+                // TODO: find a better gif or do this with css classes
+                background:
+                  "url('https://vignette.wikia.nocookie.net/uncyclopedia/images/1/17/Static.gif/revision/latest?cb=20051028174517') no-repeat center center fixed",
+                backgroundSize: "cover"
+              }
+            : {
+                background: `rgb(${rgb.join(", ")})`
+              }
+        }
       >
         {" "}
         <div className="control-wrapper">
